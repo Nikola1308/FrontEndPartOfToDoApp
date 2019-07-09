@@ -3,11 +3,15 @@ import CardGenerator from './cardGenerator'
 import TaskCard from './taskCard'
 import DoneCard from './doneCard'
 import TrashCard from './trashCard'
+import AllCardDescriptions from '../src/descriptionClasses/allDescriptions'
 
 
 const cardTask = document.getElementById('card')
 const carDone = document.getElementById('carddone')
 const cardTrash = document.getElementById('trashcards')
+
+const allDescriptions = document.getElementById('alldescriptions')
+
 
 let cardH3 = document.getElementById('cardh3')
 let carddoneh3 = document.getElementById('carddoneh3')
@@ -96,5 +100,50 @@ getDoneTasks()
     }
     getTaskDeleted()
  })
+
+
+ //========Posting Descriptions for Tasks==========//
+ document.getElementById('inputdescription').addEventListener('keypress',function(e){
+    if (e.key === 'Enter') {
+        let input = document.getElementById('inputdescription')
+        let inputValue = input.value
+
+        fetch('http://localhost:3001/todos/desctiption',{
+            method:'POST',
+            body:JSON.stringify({descriptionValue:inputValue}),
+            headers: {
+                "Content-type": 'application/json',
+                'Accept': "application/json"
+            }
+        }).then((response)=>{
+            return response.json()
+        }).then((tasks)=>{
+            console.log(tasks)
+            input.value = ''
+        })
+    }
+ })
+//===========Reading all Request===============//
+
+
+document.getElementById('descriptionload').addEventListener('click',()=>{
+    const getDescriptions =()=>{
+        fetch('http://localhost:3001/todos/description',{
+            method:"get"
+        }).then((res)=>{
+            return res.json()
+        }).then((descriptions)=>{
+           descriptions.map((description)=>{
+            const {_id,descriptionValue}= description
+            const discriptionClass = new AllCardDescriptions(_id,descriptionValue)
+            discriptionClass.generateDescriptions()
+            allDescriptions.appendChild(discriptionClass.card)
+           })
+           
+           
+        })
+    }
+    getDescriptions()
+})
 
 

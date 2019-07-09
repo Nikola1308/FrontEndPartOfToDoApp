@@ -14,6 +14,7 @@ class TaskCard extends CardGenerator {
         this.card.appendChild(this.createParagraph(this._value,'paragraphstyle'))
         this.card.appendChild(this.createButtonOne('Done Tasks','buttonstyle',()=>this.reveretToDoneCard()))
         this.card.appendChild(this.createButtonTwo('Delete Tasks','buttonstyle',() => this.deleteTaskCard()))
+        this.card.appendChild(this.createButtonThree('Click to chose Description','buttonstyle',()=>this.selectDescription()))
        
         return this.card
     }
@@ -26,7 +27,7 @@ class TaskCard extends CardGenerator {
         carDone.appendChild(cardDone.card)        
         let a = document.getElementById(this._id)
         cardTask.removeChild(a)  
-        
+
         const getUpdateToDoneCard = () =>{
             fetch(`http://localhost:3001/todos/tocdone/${this._id}`,{
                 method: 'PATCH',
@@ -64,6 +65,21 @@ class TaskCard extends CardGenerator {
             deleteTask()
                      
     } 
+    selectDescription(){
+        const getDescriptions =()=>{
+            fetch('http://localhost:3001/todos/description',{
+                method:"get"
+            }).then((res)=>{
+                return res.json()
+            }).then((data)=>{
+                console.log('DESCRIPTIONS',data)
+                data.map((dat)=>{
+                    console.log(dat.descriptionValue)
+                })
+            })
+        }
+        getDescriptions()
+    }
 
 }
 export default TaskCard

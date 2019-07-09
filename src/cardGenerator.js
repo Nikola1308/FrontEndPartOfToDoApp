@@ -5,9 +5,9 @@ class CardGenerator{
         this.card = null  
       
 	}
-    createDiv (index, className) { 
+    createDiv (_id, className) { 
         let div1 = document.createElement('div');
-        div1.id = index;
+        div1.id = _id;
         div1.className = className
         return div1;
     }
@@ -30,6 +30,13 @@ class CardGenerator{
         btn2.className = className
         btn2.onclick = onClick 
         return btn2
+    }
+    createButtonThree (textContent,className, onClick){
+        let btn3 = document.createElement('button')
+        btn3.textContent = textContent
+        btn3.className = className
+        btn3.onclick = onClick
+        return btn3
     }
 }
 export default CardGenerator
