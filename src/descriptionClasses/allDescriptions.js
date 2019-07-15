@@ -11,6 +11,7 @@ class AllCardDescriptions extends CardDescription{
         this.card = this.createDiv(this._id,'cardstyle')
         this.card.appendChild(this.createParagraph(this.descriptionValue,'paragraphstyle'))
         this.card.appendChild(this.createButtonDescription('X','buttonstyle',()=>this.deleteOneDescription()))
+        //this.card.appendChild(this.createButtonDescription2('Add description To Task','buttonstyle',()=>this.deleteOneDescription2()))
         
         return this.card
     }
@@ -32,7 +33,25 @@ class AllCardDescriptions extends CardDescription{
             })
         }
         deleteTask()    
-    }
+    }/*
+    deleteOneDescription2(){
+       //const s = descriptionsOfCards.push(this.descriptionValue)
+        const addDescription = ()=>{
+            fetch('http://localhost:3001/todos/tocdone/descirption/5d259c966618162bdc9f4e2a',{
+                method: 'PATCH',
+                body:JSON.stringify({descriptionsOfCards:this.newDescription}),
+                headers: {
+                    "Content-type": 'application/json',
+                    'Accept': "application/json"
+                }
+            }).then((response)=>{
+                return response.json()
+            }).then((data)=>{
+                console.log(data)
+            })
+        }
+        addDescription()
+    }*/
 }
 
 export default AllCardDescriptions

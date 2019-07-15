@@ -1,8 +1,8 @@
 import css from './css.css';
-import CardGenerator from './cardGenerator'
-import TaskCard from './taskCard'
-import DoneCard from './doneCard'
-import TrashCard from './trashCard'
+import CardGenerator from '../src/taskCardClasses/cardGenerator'
+import TaskCard from '../src/taskCardClasses/taskCard'
+import DoneCard from '../src/taskCardClasses/doneCard'
+import TrashCard from '../src/taskCardClasses/trashCard'
 import AllCardDescriptions from '../src/descriptionClasses/allDescriptions'
 
 
@@ -56,8 +56,62 @@ const getToDoTasks = () =>{
             const clasTask = new TaskCard(_id,value)
             clasTask.generateCard()
             cardTask.appendChild(clasTask.card)
-        })
+           
+            //console.log(clasTask.generateCard())
 
+            const findallDescriptions = ()=>{ 
+                 fetch(`http://localhost:3001/todos/one/${_id}`,{
+                 method:'GET'
+             }).then((res)=>{
+                return res.json()
+             }).then((todos)=>{
+                todos.forEach((todo)=>{
+                   
+                    let p = document.createElement('p')
+                    p.textContent = todo.descriptionValue
+
+                    let btn = document.createElement('button')
+                    btn.textContent = 'Delete Description'
+                    btn.id = todo._id
+
+                    let divReadDescription = document.createElement('div')
+                    divReadDescription.id = todo._id + 'divReadDescription'
+                    
+                    divReadDescription.appendChild(p)
+                    divReadDescription.appendChild(btn)
+
+                    let div2 = document.getElementById(_id + 'divDescriptionOne')
+                    div2.appendChild(divReadDescription)
+                    
+                    
+                    btn.addEventListener('click',()=>{
+                        console.log('aa')
+                        let a = document.getElementById(todo._id + 'divReadDescription')
+                        console.log(a)
+                        let deleteDiv = document.getElementById(_id + 'divDescriptionOne' )
+                        console.log(deleteDiv)
+                        deleteDiv.removeChild(a)
+                        const deleteTask = ()=>{
+                            fetch(`http://localhost:3001/todos/desctiptiondelete/${_id}`,{
+                                method:'PATCH',
+                                headers: {
+                                    "Content-type": 'application/json',
+                                    'Accept': "application/json"
+                                },
+                                body:JSON.stringify({newDescription:todo._id})
+                            }).then((response)=>{
+                                return response.json()
+                            }).then((data)=>{
+                                console.log('DELETED DESCRIPTION',data)
+                            })
+                        }
+                        deleteTask()
+                    })
+                })
+             })
+        }
+        findallDescriptions()
+        })
     })
 }
 getToDoTasks()
@@ -75,6 +129,56 @@ const getDoneTasks = () =>{
             const clasTask = new DoneCard(_id,value)
             clasTask.generateCard()
             carDone.appendChild(clasTask.card)
+
+            const findallDescriptions = ()=>{ 
+                fetch(`http://localhost:3001/todos/one/${_id}`,{
+                method:'GET'
+            }).then((res)=>{
+               return res.json()
+            }).then((todos)=>{
+               todos.forEach((todo)=>{
+                  
+                   let p = document.createElement('p')
+                   p.textContent = todo.descriptionValue
+
+                   let btn = document.createElement('button')
+                   btn.textContent = 'Delete Description'
+                   btn.id = todo._id
+
+                   let divReadDescription = document.createElement('div')
+                   divReadDescription.id = todo._id + 'divReadDescription'
+                   
+                   divReadDescription.appendChild(p)
+                   divReadDescription.appendChild(btn)
+
+                   let div2 = document.getElementById(_id + 'divDescriptionOne')
+                   div2.appendChild(divReadDescription)
+                   
+                   
+                   btn.addEventListener('click',()=>{
+                       let a = document.getElementById(todo._id + 'divReadDescription')
+                       let deleteDiv = document.getElementById(_id + 'divDescriptionOne' )
+                       deleteDiv.removeChild(a)
+                       const deleteTask = ()=>{
+                           fetch(`http://localhost:3001/todos/desctiptiondelete/${_id}`,{
+                               method:'PATCH',
+                               headers: {
+                                   "Content-type": 'application/json',
+                                   'Accept': "application/json"
+                               },
+                               body:JSON.stringify({newDescription:todo._id})
+                           }).then((response)=>{
+                               return response.json()
+                           }).then((data)=>{
+                               console.log('DELETED DESCRIPTION',data)
+                           })
+                       }
+                       deleteTask()
+                   })
+               })
+            })
+       }
+       findallDescriptions()
         })
     })
 }
@@ -95,6 +199,59 @@ getDoneTasks()
                 const clasTask = new TrashCard(_id,value)
                 clasTask.generateCard()
                 cardTrash.appendChild(clasTask.card)
+
+                const findallDescriptions = ()=>{ 
+                    fetch(`http://localhost:3001/todos/one/${_id}`,{
+                    method:'GET'
+                }).then((res)=>{
+                   return res.json()
+                }).then((todos)=>{
+                   todos.forEach((todo)=>{
+                      
+                       let p = document.createElement('p')
+                       p.textContent = todo.descriptionValue
+   
+                       let btn = document.createElement('button')
+                       btn.textContent = 'Delete Description'
+                       btn.id = todo._id
+   
+                       let divReadDescription = document.createElement('div')
+                       divReadDescription.id = todo._id + 'divReadDescription'
+                       
+                       divReadDescription.appendChild(p)
+                       divReadDescription.appendChild(btn)
+   
+                       let div2 = document.getElementById(_id + 'divDescriptionOne')
+                       div2.appendChild(divReadDescription)
+                       
+                       
+                       btn.addEventListener('click',()=>{
+                           console.log('aa')
+                           let a = document.getElementById(todo._id + 'divReadDescription')
+                           console.log(a)
+                           let deleteDiv = document.getElementById(_id + 'divDescriptionOne' )
+                           console.log(deleteDiv)
+                           deleteDiv.removeChild(a)
+                           const deleteTask = ()=>{
+                               fetch(`http://localhost:3001/todos/desctiptiondelete/${_id}`,{
+                                   method:'PATCH',
+                                   headers: {
+                                       "Content-type": 'application/json',
+                                       'Accept': "application/json"
+                                   },
+                                   body:JSON.stringify({newDescription:todo._id})
+                               }).then((response)=>{
+                                   return response.json()
+                               }).then((data)=>{
+                                   console.log('DELETED DESCRIPTION',data)
+                               })
+                           }
+                           deleteTask()
+                       })
+                   })
+                })
+           }
+           findallDescriptions()
             })
         })
     }

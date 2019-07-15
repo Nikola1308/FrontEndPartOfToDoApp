@@ -1,9 +1,10 @@
+import CardDescription from '../descriptionClasses/cardDescription'
+
 class CardGenerator{
     constructor(id,value){
         this._id = id
         this._value = value
-        this.card = null  
-      
+        this.card = null 
 	}
     createDiv (_id, className) { 
         let div1 = document.createElement('div');
@@ -37,6 +38,16 @@ class CardGenerator{
         btn3.className = className
         btn3.onclick = onClick
         return btn3
+    }
+    createDivDescription (){
+        let divDecriptionn = document.createElement('div')
+        divDecriptionn.id = this._id + 'divDescription'
+        return divDecriptionn
+    }
+    createDivDescriptionTwo(){
+        let divDecriptions = document.createElement('div')
+        divDecriptions.id =this._id + 'divDescriptionOne'
+        return divDecriptions
     }
 }
 export default CardGenerator

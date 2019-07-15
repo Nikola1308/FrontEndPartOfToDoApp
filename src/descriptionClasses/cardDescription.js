@@ -22,6 +22,14 @@ class CardDescription {
         btnDescriptio.className = className
         btnDescriptio.onclick = onClick
         return btnDescriptio;
-    }
+    }/*
+    createButtonDescription2(textContent,className, onClick){
+        let btnDescriptio = document.createElement('button')
+        btnDescriptio.textContent = textContent
+        btnDescriptio.className = className
+        btnDescriptio.onclick = onClick
+        return btnDescriptio;
+    }*/
+    
 }
 export default CardDescription
